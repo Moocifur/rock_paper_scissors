@@ -1,14 +1,14 @@
 
-//the choices
+//the choices so the computer has a selection
 options = ["rock", "paper", "scissors"];
 
-//gets computer choice
+//randomly picks from options variable
 function getComputerChoice() {
     const choice = options[Math.floor(Math.random() * options.length)];
     return choice;//you have to return the choice silly
 }
 
-//grabs human choice
+//gets users choice
 function getPlayerChoice() {
     const choice = prompt("Rock, Paper, or Scissors foo!?");
     const choiceInLower = choice.toLowerCase();
@@ -17,10 +17,7 @@ function getPlayerChoice() {
 
 //plays a round------------------------------------------------
 function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++){
-        function playRound(playerSelection, computerSelection) {
+        function playRound(playerSelection, computerSelection) {//this was once outside
             if (playerSelection == computerSelection) {
                 return "It's a Tie!"
             }
@@ -29,34 +26,16 @@ function game() {
                 (playerSelection == "paper" && computerSelection == "rock") ||
                 (playerSelection == "scissors" && computerSelection == "paper")
             ){
-                playerScore++;
                 return `You Win! ${playerSelection} beats ${computerSelection}` 
             }
             else {
-                computerScore++;
                 return `You Lose! ${computerSelection} beats ${playerSelection}`  
             }
         }
         
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-        console.log(`Player ${playerScore}, Computer ${computerScore}` )
-    }
-
-    gameWinner = winnerCheck();
-    function winnerCheck(playerScore, computerScore){
-    if (playerScore == computerScore){
-        return "The game is a tie!"
-    }
-    else if (playerScore > computerScore){
-        return "Player Wins the game!"
-    }
-    else {
-        return "Computer Wins the game!"
-    }
-  }
-  console.log(gameWinner)
+        const playerSelection = getPlayerChoice(); //this equals players choice
+        const computerSelection = getComputerChoice();//this equals comp choice
+        console.log(playRound(playerSelection, computerSelection)); //consoles playRound(), we got the choices above
 }
 
-game();
+game(); //activates the dominoes above
