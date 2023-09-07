@@ -1,41 +1,69 @@
 
-//the choices so the computer has a selection
-options = ["rock", "paper", "scissors"];
+let playerScore = 0;
+let computerScore = 0;
+let roundsToWin = 5;
 
-//randomly picks from options variable
-function getComputerChoice() {
+let container = document.querySelector('.button-container');//container IS buttons box
+let buttons = container.querySelectorAll('button');//buttons is buttons from html
+let playerScoreDisplay = document.querySelector('.player-score');
+let computerScoreDisplay = document.querySelector('.computer-score');
+
+let gameOver = false;
+
+function getComputerChoice() {//computer choice getter function
+    options = ["rock", "paper", "scissors"];
     const choice = options[Math.floor(Math.random() * options.length)];
     return choice;//you have to return the choice silly
 }
 
-//gets users choice
-function getPlayerChoice() {
-    const choice = prompt("Rock, Paper, or Scissors foo!?");
-    const choiceInLower = choice.toLowerCase();
-    return choiceInLower;
-}
+buttons.forEach(function(btn) {  
+    btn.addEventListener('click', function() {
+        if (!gameOver) {
+            let playerSelection = btn.textContent.toLowerCase();
+            const welcome=document.querySelector(`.welcome`)
+            const computerSelection = getComputerChoice(); //gets compouter choice
+            roundResult = (playRound(playerSelection, computerSelection));
+            
+            welcome.innerHTML = roundResult;
 
-//plays a round------------------------------------------------
-function game() {
-        function playRound(playerSelection, computerSelection) {//this was once outside
-            if (playerSelection == computerSelection) {
-                return "It's a Tie!"
+            if (playerScore === roundsToWin || computerScore === roundsToWin) {
+                gameOver = true;
+                announceWinner();
             }
-            else if (
-                (playerSelection == "rock" && computerSelection == "scissors") ||
-                (playerSelection == "paper" && computerSelection == "rock") ||
-                (playerSelection == "scissors" && computerSelection == "paper")
-            ){
-                return `You Win! ${playerSelection} beats ${computerSelection}` 
-            }
-            else {
-                return `You Lose! ${computerSelection} beats ${playerSelection}`  
-            }
+
         }
-        
-        const playerSelection = getPlayerChoice(); //this equals players choice
-        const computerSelection = getComputerChoice();//this equals comp choice
-        console.log(playRound(playerSelection, computerSelection)); //consoles playRound(), we got the choices above
+    });
+});
+
+function playRound(playerSelection, computerSelection) {//this was once outside
+    if (playerSelection == computerSelection) {
+        return "It's a Tie!"
+    }
+    else if (
+        (playerSelection == "rock" && computerSelection == "scissors") ||
+        (playerSelection == "paper" && computerSelection == "rock") ||
+        (playerSelection == "scissors" && computerSelection == "paper")
+    ){
+        playerScore++
+        playerScoreDisplay.textContent = playerScore;
+        return `You Win! ${playerSelection} beats ${computerSelection}` 
+    }
+    else {
+        computerScore++
+        computerScoreDisplay.textContent = computerScore;
+        return `You Lose! ${computerSelection} beats ${playerSelection}`  
+    }
 }
 
-game(); //activates the dominoes above
+function announceWinner() {
+    const welcome = document.querySelector('.welcome');
+    if (playerScore === roundsToWin) {
+        welcome.innerHTML = "Player Wins The GAME!";
+    } else {
+        welcome.innerHTML = "Computer Wins The GAME!"
+    }
+}
+
+
+
+
