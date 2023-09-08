@@ -2,40 +2,36 @@
 let playerScore = 0;
 let computerScore = 0;
 let roundsToWin = 5;
+let gameOver = false;
 
-let container = document.querySelector('.button-container');//container IS buttons box
-let buttons = container.querySelectorAll('button');//buttons is buttons from html
+let buttons = document.querySelectorAll('button');
+let sign = document.querySelector(`.sign`)
 let playerScoreDisplay = document.querySelector('.player-score');
 let computerScoreDisplay = document.querySelector('.computer-score');
 
-let gameOver = false;
 
-function getComputerChoice() {//computer choice getter function
+function getComputerChoice() {
     options = ["rock", "paper", "scissors"];
     const choice = options[Math.floor(Math.random() * options.length)];
-    return choice;//you have to return the choice silly
+    return choice;
 }
 
-buttons.forEach(function(btn) {  
-    btn.addEventListener('click', function() {
+buttons.forEach(selection => {  
+    selection.addEventListener('click', function() {
         if (!gameOver) {
-            let playerSelection = btn.textContent.toLowerCase();
-            const welcome=document.querySelector(`.welcome`)
-            const computerSelection = getComputerChoice(); //gets compouter choice
+            let playerSelection = selection.textContent.toLowerCase();
+            const computerSelection = getComputerChoice(); 
             roundResult = (playRound(playerSelection, computerSelection));
-            
-            welcome.innerHTML = roundResult;
-
+            sign.innerHTML = roundResult;
             if (playerScore === roundsToWin || computerScore === roundsToWin) {
                 gameOver = true;
                 announceWinner();
-            }
-
-        }
+            };
+        };
     });
 });
 
-function playRound(playerSelection, computerSelection) {//this was once outside
+function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
         return "It's a Tie!"
     }
@@ -56,11 +52,10 @@ function playRound(playerSelection, computerSelection) {//this was once outside
 }
 
 function announceWinner() {
-    const welcome = document.querySelector('.welcome');
     if (playerScore === roundsToWin) {
-        welcome.innerHTML = "Player Wins The GAME!";
+        sign.innerHTML = "Player Wins The GAME!";
     } else {
-        welcome.innerHTML = "Computer Wins The GAME!"
+        sign.innerHTML = "Computer Wins The GAME!"
     }
 }
 
